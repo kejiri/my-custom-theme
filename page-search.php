@@ -13,8 +13,16 @@ get_header();
         <div class="filters">
           <select name="category" id="items-category">
             <option value="">All Genres</option>
-            <option value="Genre 1">Genre 1</option>
-            <option value="Genre 2">Genre 2</option>
+            <?php
+            // WooCommerceのカテゴリを取得してセレクトボックスを生成
+            $genres = get_terms([
+                'taxonomy' => 'product_cat', // WooCommerceの商品カテゴリ
+                'hide_empty' => true,
+            ]);
+            foreach ($genres as $genre) {
+                echo '<option value="' . esc_attr($genre->slug) . '">' . esc_html($genre->name) . '</option>';
+            }
+            ?>
           </select>
           <button id="items-search-button">Search</button>
         </div>
@@ -36,8 +44,16 @@ get_header();
       <div class="filters">
         <select name="category" id="brands-category">
           <option value="">All Genres</option>
-          <option value="Genre 1">Genre 1</option>
-          <option value="Genre 2">Genre 2</option>
+          <?php
+          // ブランド用カスタムタクソノミーを取得
+          $brand_genres = get_terms([
+              'taxonomy' => 'brand_genre', // ブランド用のカスタムタクソノミー
+              'hide_empty' => true,
+          ]);
+          foreach ($brand_genres as $genre) {
+              echo '<option value="' . esc_attr($genre->slug) . '">' . esc_html($genre->name) . '</option>';
+          }
+          ?>
         </select>
         <button id="brands-search-button">Search</button>
       </div>
