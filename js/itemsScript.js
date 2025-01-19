@@ -7,11 +7,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let itemsData = [];
 
-    // JSONファイルからデータを取得
-    fetch('<?php echo get_template_directory_uri(); ?>/data/itemsData.json')
+    // WooCommerce REST APIからデータを取得
+    fetch('/wp-json/wc/v3/products?per_page=100', {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to fetch items data');
+                throw new Error('Failed to fetch items data from WooCommerce');
             }
             return response.json();
         })
@@ -29,28 +33,28 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             noResultMessage.style.display = 'none';
             items.forEach(item => {
-                let genreSection = document.querySelector(`.genre-section[data-genre="${item.genre}"]`);
+                // 商品カテゴリ（ジャンル）ごとのセクション
+                let genreSection = document.querySelector(`.genre-section[data-genre="${item.categories[0]?.name || 'Uncategorized'}"]`);
                 if (!genreSection) {
                     const newGenreSection = document.createElement('div');
                     newGenreSection.className = 'genre-section';
-                    newGenreSection.setAttribute('data-genre', item.genre);
+                    newGenreSection.setAttribute('data-genre', item.categories[0]?.name || 'Uncategorized');
                     newGenreSection.innerHTML = `
-                        <h2 class="genre-title">${item.genre}</h2>
+                        <h2 class="genre-title">${item.categories[0]?.name || 'Uncategorized'}</h2>
                         <div class="list"></div>
                     `;
                     itemsList.appendChild(newGenreSection);
                 }
 
-                const list = document.querySelector(`.genre-section[data-genre="${item.genre}"] .list`);
+                const list = document.querySelector(`.genre-section[data-genre="${item.categories[0]?.name || 'Uncategorized'}"] .list`);
                 const itemElement = document.createElement('div');
                 itemElement.className = 'list_content visible';
-                itemElement.setAttribute('data-itemid', item.itemID); // itemIDを設定
+                itemElement.setAttribute('data-itemid', item.id); // WooCommerceの商品ID
                 itemElement.innerHTML = `
-                    <img src="<?php echo get_template_directory_uri(); ?>/${item.image}" alt="${item.name}">
+                    <img src="${item.images[0]?.src || 'placeholder.jpg'}" alt="${item.name}">
                     <h3>${item.name}</h3>
-                    <p>Brand: ${item.brandName}</p> <!-- ブランド名を追加 -->
-                    <p>${item.price}</p>
-                    <a href="${item.link}" class="item-link" data-id="${item.itemID}">View Details</a>
+                    <p>Price: ${item.price_html || 'N/A'}</p>
+                    <a href="${item.permalink}" class="item-link" data-id="${item.id}">View Details</a>
                 `;
                 list.appendChild(itemElement);
             });
@@ -63,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedGenre = genreSelect.value.trim();
         const filteredItems = itemsData.filter(item => {
             const matchesKeyword = !keyword || item.name.toLowerCase().includes(keyword);
-            const matchesGenre = !selectedGenre || item.genre === selectedGenre;
+            const matchesGenre = !selectedGenre || item.categories.some(category => category.name === selectedGenre);
             return matchesKeyword && matchesGenre;
         });
         renderItems(filteredItems);
@@ -81,17 +85,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     genreSelect.addEventListener('change', performSearch);
 
-    // 検索履歴の取得
+    // 検索履歴の保存
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('item-link')) {
             const id = parseInt(e.target.dataset.id, 10);
-            const selectedItem = itemsData.find(item => item.itemID === id);
+            const selectedItem = itemsData.find(item => item.id === id);
 
             if (selectedItem) {
                 const history = JSON.parse(localStorage.getItem('itemsSearchHistory')) || [];
                 
-                // 同じIDのアイテムを重複して保存しない
-                if (!history.find(item => item.itemID === id)) {
+                // 重複を防ぐ
+                if (!history.find(item => item.id === id)) {
                     history.unshift(selectedItem);
                     localStorage.setItem('itemsSearchHistory', JSON.stringify(history));
                 }
