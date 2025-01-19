@@ -1,0 +1,23 @@
+const jsonToCsv = (jsonData) => {
+    const csvRows = [];
+    const headers = Object.keys(jsonData); // ヘッダー行を生成
+    csvRows.push(headers.join(',')); 
+
+    const values = headers.map(header => `"${jsonData[header]}"`); // 値をCSV用に整形
+    csvRows.push(values.join(','));
+
+    return csvRows.join('\n'); // CSV形式の文字列を返す
+};
+
+const highlightData = {
+  "id": 1,
+  "title": "Highlight News Title",
+  "date": "2024-12-30",
+  "category": "updates",
+  "image": "highlight.jpg",
+  "description": "This is the highlight news description. It provides an overview of the most exciting or important news currently featured.",
+  "link": "highlight-detail.html"
+};
+
+const csvData = jsonToCsv(highlightData);
+console.log(csvData);
