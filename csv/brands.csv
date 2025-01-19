@@ -1,0 +1,32 @@
+const jsonToCsv = (jsonData) => {
+    const csvRows = [];
+    const headers = Object.keys(jsonData[0]);
+    csvRows.push(headers.join(',')); // ヘッダー行
+
+    jsonData.forEach(row => {
+        const values = headers.map(header => `"${row[header]}"`); // 値を取得し、CSV用に整形
+        csvRows.push(values.join(','));
+    });
+
+    return csvRows.join('\n'); // CSV形式の文字列を返す
+};
+
+const brandsData = [
+    {
+      "brandID": 101,
+      "name": "Brand Name 1",
+      "genre": "Genre 1",
+      "image": "brand1.jpg",
+      "link": "brands_templete.html"
+    },
+    {
+      "brandID": 102,
+      "name": "Brand Name 2",
+      "genre": "Genre 1",
+      "image": "brand2.jpg",
+      "link": "brand-detail2.html"
+    }
+];
+
+const csvData = jsonToCsv(brandsData);
+console.log(csvData); // 出力されたCSV形式のデータ
