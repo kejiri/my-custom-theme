@@ -1,0 +1,36 @@
+const jsonToCsv = (jsonData) => {
+    const csvRows = [];
+    const headers = Object.keys(jsonData[0]);
+    csvRows.push(headers.join(',')); // ヘッダー行
+
+    jsonData.forEach(row => {
+        const values = headers.map(header => `"${row[header]}"`); // 値をCSV用に整形
+        csvRows.push(values.join(','));
+    });
+
+    return csvRows.join('\n'); // CSV形式の文字列を返す
+};
+
+const newsData = [
+  {
+      "id": 1,
+      "title": "News Title 1",
+      "date": "2024-12",
+      "category": "events",
+      "image": "example1.jpg",
+      "description": "Short description 1",
+      "link": "detail1.html"
+  },
+  {
+      "id": 2,
+      "title": "News Title 2",
+      "date": "2024-11",
+      "category": "updates",
+      "image": "example2.jpg",
+      "description": "Short description 2",
+      "link": "detail2.html"
+  }
+];
+
+const csvData = jsonToCsv(newsData);
+console.log(csvData);
