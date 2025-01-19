@@ -9,16 +9,31 @@ get_header();
         <div class="filters">
             <select name="category" id="category-select">
                 <option value="">All Categories</option>
-                <option value="events">Events</option>
-                <option value="updates">Updates</option>
-                <option value="promotions">Promotions</option>
+                <?php
+                // WordPressのカテゴリを取得して表示
+                $categories = get_categories(['hide_empty' => true]);
+                foreach ($categories as $category) {
+                    echo '<option value="' . esc_attr($category->slug) . '">' . esc_html($category->name) . '</option>';
+                }
+                ?>
             </select>
             <select name="archive" id="date-select">
                 <option value="">All Dates</option>
-                <option value="2024-12">December 2024</option>
-                <option value="2024-11">November 2024</option>
-                <option value="2024-10">October 2024</option>
-                <option value="2024-09">September 2024</option>
+                <?php
+                // アーカイブ日付を取得
+                global $wpdb;
+                $dates = $wpdb->get_results("
+                    SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month 
+                    FROM $wpdb->posts 
+                    WHERE post_type = 'post' AND post_status = 'publish'
+                    ORDER BY post_date DESC
+                ");
+                foreach ($dates as $date) {
+                    $dateValue = sprintf('%04d-%02d', $date->year, $date->month);
+                    $dateLabel = date("F Y", strtotime($date->year . '-' . $date->month . '-01'));
+                    echo '<option value="' . esc_attr($dateValue) . '">' . esc_html($dateLabel) . '</option>';
+                }
+                ?>
             </select>
             <input type="text" id="keyword-input" placeholder="Search news...">
             <button id="search-button">Search</button>
@@ -28,7 +43,7 @@ get_header();
         <div id="highlight" class="highlight"></div>
 
         <!-- No Results Message -->
-        <p id="no-result">No news items match your search criteria.</p>
+        <p id="no-result" style="display: none;">No news items match your search criteria.</p>
 
         <!-- News Items -->
         <div id="news-list"></div>
