@@ -11,16 +11,24 @@ document.addEventListener('DOMContentLoaded', function () {
   let currentPage = 1;
   let newsData = [];
 
-  // JSONファイルからデータを取得
-  fetch('<?php echo get_template_directory_uri(); ?>/data/newsData.json')
+  // WordPress REST APIからニュースデータを取得
+  fetch('/wp-json/wp/v2/posts?per_page=100&_embed')
       .then(response => {
           if (!response.ok) {
-              throw new Error('Failed to fetch news data');
+              throw new Error('Failed to fetch news data from WordPress');
           }
           return response.json();
       })
       .then(data => {
-          newsData = data;
+          newsData = data.map(post => ({
+              id: post.id,
+              title: post.title.rendered,
+              date: new Date(post.date).toISOString().split('T')[0], // YYYY-MM-DD形式に変換
+              category: post.categories[0] || 'Uncategorized', // カテゴリID（カテゴリ名に変換する場合は追加処理が必要）
+              image: post._embedded['wp:featuredmedia']?.[0]?.source_url || 'placeholder.jpg', // アイキャッチ画像
+              description: post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, ''), // HTMLタグを削除
+              link: post.link
+          }));
           renderNews();
           renderPagination(newsData.length);
       })
@@ -43,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
               const newsItem = document.createElement('div');
               newsItem.className = 'news-item';
               newsItem.innerHTML = `
-                  <img src="<?php echo get_template_directory_uri(); ?>/${news.image}" alt="${news.title}">
+                  <img src="${news.image}" alt="${news.title}">
                   <div class="news-item-content">
                       <h3>${news.title}</h3>
                       <p>Date: ${news.date}</p>
@@ -59,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function filterNews() {
       return newsData.filter(news => {
           const matchesCategory = !categorySelect.value || news.category === categorySelect.value;
-          const matchesDate = !dateSelect.value || news.date === dateSelect.value;
+          const matchesDate = !dateSelect.value || news.date.startsWith(dateSelect.value);
           const matchesKeyword = !keywordInput.value || news.title.toLowerCase().includes(keywordInput.value.toLowerCase());
           return matchesCategory && matchesDate && matchesKeyword;
       });
@@ -85,45 +93,36 @@ document.addEventListener('DOMContentLoaded', function () {
               e.preventDefault();
               currentPage = i;
               renderNews();
-              renderPagination(filteredNews().length);
+              renderPagination(filterNews().length);
           });
 
           pagination.appendChild(pageLink);
       }
   }
 
-  function filteredNews() {
-      return newsData.filter(news => {
-          const matchesCategory = !categorySelect.value || news.category === categorySelect.value;
-          const matchesDate = !dateSelect.value || news.date === dateSelect.value;
-          const matchesKeyword = !keywordInput.value || news.title.toLowerCase().includes(keywordInput.value.toLowerCase());
-          return matchesCategory && matchesDate && matchesKeyword;
-      });
-  }
-
   searchButton.addEventListener('click', () => {
       currentPage = 1;
       renderNews();
-      renderPagination(filteredNews().length);
+      renderPagination(filterNews().length);
   });
 
   categorySelect.addEventListener('change', () => {
       currentPage = 1;
       renderNews();
-      renderPagination(filteredNews().length);
+      renderPagination(filterNews().length);
   });
 
   dateSelect.addEventListener('change', () => {
       currentPage = 1;
       renderNews();
-      renderPagination(filteredNews().length);
+      renderPagination(filterNews().length);
   });
 
   keywordInput.addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
           currentPage = 1;
           renderNews();
-          renderPagination(filteredNews().length);
+          renderPagination(filterNews().length);
       }
   });
 });
