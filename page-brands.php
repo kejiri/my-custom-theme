@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template Name: Brands Page
+ * Description: A custom template for the brands page.
+ */
 // ヘッダーを呼び出す
 get_header();
 ?>
