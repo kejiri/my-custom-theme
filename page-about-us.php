@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: About Us Page
+ * Template Name: About Us
  * Description: A custom template for the about us page.
  */
 // ヘッダーを呼び出す
