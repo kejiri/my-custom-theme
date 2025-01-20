@@ -18,15 +18,20 @@ function enqueue_theme_assets() {
     );
 
     // JavaScriptファイルの読み込み
-    if (is_page('items')) {
+    function enqueue_shop_scripts() {
+    // WooCommerceの商品アーカイブページでのみスクリプトを読み込む
+    if (is_shop() || is_product_category()) {
         wp_enqueue_script(
-            'items-script',
-            get_template_directory_uri() . '/js/itemsScript.js',
-            [],
-            null,
-            true
+            'items-script', // スクリプトのハンドル名
+            get_template_directory_uri() . '/js/itemsScript.js', // スクリプトのパス
+            array(), // 依存スクリプト（例: ['jquery']が必要なら記述）
+            null, // バージョン（変更を即座に反映するならnull）
+            true // フッターでスクリプトを読み込む
         );
     }
+}
+add_action('wp_enqueue_scripts', 'enqueue_shop_scripts');
+
 
     if (is_page('news')) {
         wp_enqueue_script(
