@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('/wp-json/wc/v3/products?per_page=100', {
         headers: {
             'Content-Type': 'application/json',
+            // 必要に応じて認証ヘッダーを追加
+            // 'Authorization': 'Basic ' + btoa('consumer_key:consumer_secret'),
         }
     })
         .then(response => {
@@ -92,12 +94,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedItem = itemsData.find(item => item.id === id);
 
             if (selectedItem) {
-                const history = JSON.parse(localStorage.getItem('itemsSearchHistory')) || [];
+                const history = JSON.parse(localStorage.getItem('shopSearchHistory')) || [];
                 
                 // 重複を防ぐ
                 if (!history.find(item => item.id === id)) {
                     history.unshift(selectedItem);
-                    localStorage.setItem('itemsSearchHistory', JSON.stringify(history));
+                    localStorage.setItem('shopSearchHistory', JSON.stringify(history));
                 }
             }
         }
