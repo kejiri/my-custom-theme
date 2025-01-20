@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template Name: About Us Page
+ * Description: A custom template for the about us page.
+ */
 // ヘッダーを呼び出す
 get_header();
 ?>
