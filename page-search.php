@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Search Page
+ * Template Name: Search
  * Description: A custom template for the search page.
  */
 // ヘッダーを呼び出す
