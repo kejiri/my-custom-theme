@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template Name: Customer Page
+ * Description: A custom template for the customer page.
+ */
 // ヘッダーを呼び出す
 get_header();
 ?>
