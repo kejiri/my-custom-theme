@@ -7,12 +7,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let itemsData = [];
 
+    // Consumer Key と Consumer Secret
+    const consumerKey = 'ck_xxxxxxxxxxxxxxxxxxxxx'; // WooCommerceで生成したConsumer Key
+    const consumerSecret = 'cs_xxxxxxxxxxxxxxxxxxxxx'; // WooCommerceで生成したConsumer Secret
+
     // WooCommerce REST APIからデータを取得
     fetch('/wp-json/wc/v3/products?per_page=100', {
         headers: {
             'Content-Type': 'application/json',
-            // 必要に応じて認証ヘッダーを追加
-            // 'Authorization': 'Basic ' + btoa('consumer_key:consumer_secret'),
+            'Authorization': 'Basic ' + btoa(`${consumerKey}:${consumerSecret}`),
         }
     })
         .then(response => {
