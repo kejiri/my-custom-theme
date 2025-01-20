@@ -1,8 +1,4 @@
 <?php
-/**
- * Template Name: Items
- * Description: A custom template for the items page.
- */
 // WooCommerceのヘッダーを呼び出す
 get_header();
 ?>
