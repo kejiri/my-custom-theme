@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Brands Page
+ * Template Name: Brands
  * Description: A custom template for the brands page.
  */
 // ヘッダーを呼び出す
