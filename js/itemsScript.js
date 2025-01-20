@@ -8,27 +8,32 @@ document.addEventListener('DOMContentLoaded', function () {
     let itemsData = [];
 
     // Consumer Key と Consumer Secret
-    const consumerKey = 'ck_xxxxxxxxxxxxxxxxxxxxx'; // WooCommerceで生成したConsumer Key
-    const consumerSecret = 'cs_xxxxxxxxxxxxxxxxxxxxx'; // WooCommerceで生成したConsumer Secret
+    const consumerKey = 'ck_f5a3e4b475573e99cffiff7ec3dbba111e70b288'; // WooCommerceで生成したConsumer Key
+    const consumerSecret = 'cs_498ebaadf7d09f6429ccee1793da3dc537954ab1'; // WooCommerceで生成したConsumer Secret
 
     // WooCommerce REST APIからデータを取得
-    fetch('/wp-json/wc/v3/products?per_page=100', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa(`${consumerKey}:${consumerSecret}`),
-        }
-    })
-        .then(response => {
+    const fetchItems = async () => {
+        try {
+            const response = await fetch('/wp-json/wc/v3/products?per_page=100', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa(`${consumerKey}:${consumerSecret}`),
+                },
+            });
+
             if (!response.ok) {
-                throw new Error('Failed to fetch items data from WooCommerce');
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return response.json();
-        })
-        .then(data => {
+
+            const data = await response.json();
             itemsData = data;
             renderItems(itemsData); // 初期表示
-        })
-        .catch(error => console.error('Error loading items data:', error));
+        } catch (error) {
+            console.error('Error loading items data:', error);
+            noResultMessage.style.display = 'block';
+            noResultMessage.textContent = 'Failed to load items. Please try again later.';
+        }
+    };
 
     // 商品リストをレンダリングする関数
     function renderItems(items) {
@@ -38,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             noResultMessage.style.display = 'none';
             items.forEach(item => {
-                // 商品カテゴリ（ジャンル）ごとのセクション
                 let genreSection = document.querySelector(`.genre-section[data-genre="${item.categories[0]?.name || 'Uncategorized'}"]`);
                 if (!genreSection) {
                     const newGenreSection = document.createElement('div');
@@ -54,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const list = document.querySelector(`.genre-section[data-genre="${item.categories[0]?.name || 'Uncategorized'}"] .list`);
                 const itemElement = document.createElement('div');
                 itemElement.className = 'list_content visible';
-                itemElement.setAttribute('data-itemid', item.id); // WooCommerceの商品ID
+                itemElement.setAttribute('data-itemid', item.id);
                 itemElement.innerHTML = `
                     <img src="${item.images[0]?.src || 'placeholder.jpg'}" alt="${item.name}">
                     <h3>${item.name}</h3>
@@ -78,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderItems(filteredItems);
     }
 
-    // 検索ボタンのクリックイベント
+	// 検索ボタンのクリックイベント
     searchButton.addEventListener('click', performSearch);
 
     // Enterキーで検索を実行
@@ -107,4 +111,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+
+    // イベントリスナー
+    searchButton.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', (e) => e.key === 'Enter' && performSearch());
+    genreSelect.addEventListener('change', performSearch);
+
+    // 初期データを取得
+    fetchItems();
 });
