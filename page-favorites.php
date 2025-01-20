@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template Name: Favorites Page
+ * Description: A custom template for the favorites page.
+ */
 // ヘッダーを呼び出す
 get_header();
 ?>
