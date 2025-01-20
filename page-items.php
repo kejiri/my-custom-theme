@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Items Page
+ * Template Name: Items
  * Description: A custom template for the items page.
  */
 // ヘッダーを呼び出す
