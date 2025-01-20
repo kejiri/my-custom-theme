@@ -26,7 +26,18 @@ get_header();
     </div>
     <p id="no-result" class="no-result">No items found. Please try a different search.</p>
     <div id="items-list">
-        <!-- JavaScriptが動的にアイテムをレンダリング -->
+        <?php
+        // WooCommerceの商品を表示
+        if ( have_posts() ) :
+            woocommerce_product_loop_start();
+            while ( have_posts() ) : the_post();
+                wc_get_template_part( 'content', 'product' );
+            endwhile;
+            woocommerce_product_loop_end();
+        else :
+            echo '<p>No products found</p>';
+        endif;
+        ?>
     </div>
 </main>
 
