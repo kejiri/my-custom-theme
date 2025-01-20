@@ -20,7 +20,7 @@
             <li><a href="<?php echo home_url('/items'); ?>">Items</a></li>
             <li><a href="<?php echo home_url('/brands'); ?>">Brands</a></li>
             <li><a href="<?php echo home_url('/news'); ?>">News</a></li>
-            <a href="<?php echo get_permalink(get_page_by_path('about-us')); ?>">About Us</a>
+            <li><a href="<?php echo home_url('/about-us'); ?>">About Us</a></li>
             <li><a href="<?php echo home_url('/customer'); ?>">Customer</a></li>
         </ul>
     </nav>
