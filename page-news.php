@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template Name: News Page
+ * Description: A custom template for the news page.
+ */
 // ヘッダーを呼び出す
 get_header();
 ?>
