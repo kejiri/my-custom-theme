@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template Name: Search Page
+ * Description: A custom template for the search page.
+ */
 // ヘッダーを呼び出す
 get_header();
 ?>
