@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template Name: Ranking Page
+ * Description: A custom template for the ranking page.
+ */
 // ヘッダーを呼び出す
 get_header();
 ?>
