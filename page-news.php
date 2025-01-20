@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: News Page
+ * Template Name: News
  * Description: A custom template for the news page.
  */
 // ヘッダーを呼び出す
