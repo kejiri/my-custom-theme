@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Ranking Page
+ * Template Name: Ranking
  * Description: A custom template for the ranking page.
  */
 // ヘッダーを呼び出す
