@@ -7,10 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let itemsData = [];
 
-    // Consumer Key と Consumer Secret
-    const consumerKey = 'ck_f5a3e4b475573e99cffiff7ec3dbba111e70b288'; // WooCommerceで生成したConsumer Key
-    const consumerSecret = 'cs_498ebaadf7d09f6429ccee1793da3dc537954ab1'; // WooCommerceで生成したConsumer Secret
-
     // WooCommerce REST APIからデータを取得
     const fetchItems = async () => {
         try {
@@ -82,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderItems(filteredItems);
     }
 
-	// 検索ボタンのクリックイベント
+    // 検索ボタンのクリックイベント
     searchButton.addEventListener('click', performSearch);
 
     // Enterキーで検索を実行
