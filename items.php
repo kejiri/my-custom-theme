@@ -1,6 +1,10 @@
 <?php
+/**
+ * Template Name: Items
+ * Description: A custom template for the items page.
+ */
 // WooCommerceのヘッダーを呼び出す
-get_header('shop');
+get_header();
 ?>
 
 <main class="items">
@@ -32,5 +36,5 @@ get_header('shop');
 
 <?php
 // WooCommerceのフッターを呼び出す
-get_footer('shop');
+get_footer();
 ?>
