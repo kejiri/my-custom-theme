@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template Name: Items Page
+ * Description: A custom template for the items page.
+ */
 // ヘッダーを呼び出す
 get_header();
 ?>
