@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Favorites Page
+ * Template Name: Favorites
  * Description: A custom template for the favorites page.
  */
 // ヘッダーを呼び出す
