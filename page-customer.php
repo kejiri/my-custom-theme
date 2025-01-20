@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Customer Page
+ * Template Name: Customer
  * Description: A custom template for the customer page.
  */
 // ヘッダーを呼び出す
