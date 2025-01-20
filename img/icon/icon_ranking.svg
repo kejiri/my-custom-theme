@@ -1,0 +1,21 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+  <rect width="48" height="48" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0)">
+  <!-- Trophy Outline -->
+  <path d="M12 10 H36 A6 6 0 0 1 42 16 V24 A12 12 0 0 1 30 36 H18 A12 12 0 0 1 6 24 V16 A6 6 0 0 1 12 10 Z" 
+        fill="none" stroke="#FCF7E6" stroke-width="3"/>
+  <!-- Left Handle -->
+  <path d="M6 16 A6 6 0 0 0 2 24 V26 A6 6 0 0 0 6 32" 
+        fill="none" stroke="#FCF7E6" stroke-width="3"/>
+  <!-- Right Handle -->
+  <path d="M42 16 A6 6 0 0 1 46 24 V26 A6 6 0 0 1 42 32" 
+        fill="none" stroke="#FCF7E6" stroke-width="3"/>
+  <!-- Base -->
+  <rect x="14" y="36" width="20" height="5" 
+        fill="none" stroke="#FCF7E6" stroke-width="3"/>
+  <rect x="12" y="42" width="24" height="4" 
+        fill="none" stroke="#FCF7E6" stroke-width="3"/>
+</g>
+</svg>
