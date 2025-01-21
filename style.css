@@ -680,6 +680,16 @@ background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
 	display: flex;
 }
 
+#news-list {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.news-item {
+    display: block;
+    margin-bottom: 20px;
+}
 ---------------------------------------------------------------------------------------------------------------------------
 /* footerの作成 */
 footer {
