@@ -77,3 +77,56 @@ function add_woocommerce_support() {
     add_theme_support('woocommerce');
 }
 add_action('after_setup_theme', 'add_woocommerce_support');
+
+// カスタム投稿タイプ: ブランド
+function register_brands_post_type() {
+    register_post_type('brands', [
+        'labels' => [
+            'name' => 'Brands',
+            'singular_name' => 'Brand',
+        ],
+        'public' => true,
+        'has_archive' => true,
+        'supports' => ['title', 'editor', 'thumbnail'],
+        'rewrite' => ['slug' => 'brands'],
+    ]);
+}
+add_action('init', 'register_brands_post_type');
+
+// カスタムタクソノミー: ブランドのジャンル
+function register_brand_genre_taxonomy() {
+    register_taxonomy('brand_genre', 'brands', [
+        'labels' => [
+            'name' => 'Brand Genres',
+            'singular_name' => 'Brand Genre',
+        ],
+        'public' => true,
+        'hierarchical' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'rewrite' => ['slug' => 'brand-genre'],
+    ]);
+}
+add_action('init', 'register_brand_genre_taxonomy');
+
+// カスタム投稿タイプ: ニュース
+function register_news_post_type() {
+    register_post_type('news', [
+        'labels' => [
+            'name' => 'News',
+            'singular_name' => 'News Item',
+            'add_new' => 'Add News',
+            'add_new_item' => 'Add New News Item',
+            'edit_item' => 'Edit News Item',
+            'new_item' => 'New News Item',
+            'view_item' => 'View News Item',
+            'view_items' => 'View News',
+            'search_items' => 'Search News',
+        ],
+        'public' => true,
+        'has_archive' => true,
+        'supports' => ['title', 'editor', 'excerpt', 'thumbnail'],
+        'rewrite' => ['slug' => 'news'],
+    ]);
+}
+add_action('init', 'register_news_post_type');
