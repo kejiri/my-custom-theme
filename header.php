@@ -28,7 +28,8 @@
         <ul class="list_nav_icon_header">
             <li><a href="<?php echo home_url('/search'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/icon/icon_search.svg" width="30" style="vertical-align: bottom;" alt="Search"></a></li>
             <li><a href="<?php echo home_url('/cart'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/icon/icon_cart.svg" width="30" style="vertical-align: bottom;" alt="Cart"></a></li>
-            <li><a href="<?php echo home_url('/profile'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/icon/icon_profile.svg" width="30" style="vertical-align: bottom;" alt="Profile"></a></li>
+			<li><a href="<?php echo home_url('/checkout'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/icon/icon_cart.svg" width="30" style="vertical-align: bottom;" alt="Checkout"></a></li>
+            <li><a href="<?php echo home_url('/my-account'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/icon/icon_profile.svg" width="30" style="vertical-align: bottom;" alt="my-account"></a></li>
             <li><a href="<?php echo home_url('/favorites'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/icon/icon_favorites.svg" width="30" style="vertical-align: bottom;" alt="Favorites"></a></li>
             <li><a href="<?php echo home_url('/ranking'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/icon/icon_ranking.svg" width="30" style="vertical-align: bottom;" alt="Ranking"></a></li>
         </ul>
