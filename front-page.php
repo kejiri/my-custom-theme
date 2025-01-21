@@ -1,6 +1,11 @@
 <?php
+/**
+ * Template Name: Home
+ * Description: A custom template for the home page.
+ */
 // ヘッダーを呼び出す
 get_header();
+	
 ?>
 
 <main>
